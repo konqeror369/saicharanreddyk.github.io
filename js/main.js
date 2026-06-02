@@ -338,11 +338,20 @@ function initLightbox() {
   });
 }
 
-/* ── Section nav arrows ───────────────────────────────────────── */
+/* ── Section scroll nav (right-side) ─────────────────────────── */
 function initSectionNav() {
+  const LABELS = { intro: 'Home', education: 'Education', experience: 'Experience', skills: 'Skills', certifications: 'Certs', awards: 'Awards', mentorship: 'More', contact: 'Contact' };
   const sections = Array.from(qsa('main section[id]'));
-  const upBtn = qs('#nav-up');
-  const downBtn = qs('#nav-down');
+  const nav = qs('#scroll-nav');
+
+  const items = sections.map((s, i) => {
+    const a = document.createElement('a');
+    a.href = `#${s.id}`;
+    a.innerHTML = `<span class="snav-label">${LABELS[s.id] || s.id}</span><span class="snav-dot"></span>`;
+    a.addEventListener('click', e => { e.preventDefault(); s.scrollIntoView({ behavior: 'smooth' }); });
+    nav.appendChild(a);
+    return a;
+  });
 
   function getCurrentIdx() {
     const mid = window.scrollY + window.innerHeight * 0.4;
@@ -354,22 +363,14 @@ function initSectionNav() {
   }
 
   function update() {
-    const idx = getCurrentIdx();
-    upBtn.classList.toggle('visible', idx > 0);
-    downBtn.classList.toggle('visible', idx < sections.length - 1);
+    const cur = getCurrentIdx();
+    items.forEach((a, i) => {
+      const dist = Math.abs(i - cur);
+      a.className = dist === 0 ? 'snav-active' : dist === 1 ? 'snav-near' : '';
+    });
   }
 
   window.addEventListener('scroll', update, { passive: true });
-
-  upBtn.addEventListener('click', () => {
-    const idx = getCurrentIdx();
-    if (idx > 0) sections[idx - 1].scrollIntoView({ behavior: 'smooth' });
-  });
-  downBtn.addEventListener('click', () => {
-    const idx = getCurrentIdx();
-    if (idx < sections.length - 1) sections[idx + 1].scrollIntoView({ behavior: 'smooth' });
-  });
-
   update();
 }
 
