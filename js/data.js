@@ -9,7 +9,7 @@ const PORTFOLIO = {
   about: {
     bio: "Software engineer with 5+ years of experience building enterprise applications in C++. I've worked across two distinct layers —\n" +
     "Building connected experiences for compliance (GST, e-Way Bill) and operations (Banks, Payment Gateways, WhatsApp) for millions of TallyPrime customers.\n" +
-    "Enabling access to TallyPrime from anytime, anywhere for tens of thousands of customers!",
+    "Enabling access to TallyPrime from anywhere, anytime for tens of thousands of customers!",
     education: [
       {
         degree: "Bachelor of Engineering (Honours) in Computer Science",

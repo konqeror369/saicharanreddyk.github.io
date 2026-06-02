@@ -13,7 +13,7 @@
   --radius: 8px;
   --radius-lg: 16px;
   --nav-h: 64px;
-  --section-py: clamp(5rem, 10vw, 9rem);
+  --section-py: clamp(3rem, 6vw, 5rem);
   --max-w: 1100px;
   --ease: cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -38,6 +38,10 @@ img { display: block; max-width: 100%; }
   width: 90%;
   max-width: var(--max-w);
   margin-inline: auto;
+}
+/* reserve right gutter for scroll nav */
+@media (min-width: 901px) {
+  main .container { padding-right: 9rem; }
 }
 section { padding-block: var(--section-py); }
 .section-label {
@@ -665,30 +669,69 @@ section { padding-block: var(--section-py); }
   flex-shrink: 0;
 }
 
-/* ── Section nav arrows ────────────────────────────────────────── */
-.section-nav-btn {
+/* ── Section scroll nav (right-side) ──────────────────────────── */
+#scroll-nav {
   position: fixed;
-  left: 50%;
-  transform: translateX(-50%);
+  right: 1.25rem;
+  top: 50%;
+  transform: translateY(-50%);
   z-index: 90;
-  width: 42px; height: 42px;
-  border-radius: 50%;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  color: var(--muted);
-  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.55rem;
+}
+#scroll-nav a {
   display: flex;
   align-items: center;
-  justify-content: center;
-  opacity: 0;
-  pointer-events: none;
-  transition: border-color 0.25s, color 0.25s, opacity 0.3s;
+  gap: 0.45rem;
+  cursor: pointer;
+  text-decoration: none;
+  transition: gap 0.25s var(--ease);
 }
-#nav-up   { top: calc(var(--nav-h) + 1rem); }
-#nav-down { bottom: 1.5rem; }
-.section-nav-btn.visible { opacity: 1; pointer-events: auto; }
-.section-nav-btn svg { width: 16px; height: 16px; }
-.section-nav-btn:hover { border-color: var(--accent); color: var(--accent); }
+.snav-label {
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+  color: #fff;
+  opacity: 0.25;
+  transform: translateX(0);
+  transition: opacity 0.25s var(--ease), font-size 0.25s, font-weight 0.25s, text-shadow 0.25s;
+  pointer-events: none;
+}
+.snav-dot {
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: #fff;
+  opacity: 0.2;
+  flex-shrink: 0;
+  transition: width 0.25s var(--ease), height 0.25s var(--ease), opacity 0.25s, box-shadow 0.25s;
+}
+/* active — full brightness + glow */
+#scroll-nav a.snav-active .snav-dot {
+  width: 14px; height: 12px;
+  border-radius: 0;
+  clip-path: polygon(100% 0, 100% 100%, 0 50%);
+  opacity: 1;
+  filter: drop-shadow(0 0 6px var(--accent));
+}
+#scroll-nav a.snav-active .snav-label {
+  opacity: 1;
+  font-size: 1.4rem;
+  font-weight: 700;
+  text-shadow: 0 0 16px var(--accent), 0 0 32px color-mix(in srgb, var(--accent) 50%, transparent);
+}
+/* near (±1) — mid brightness */
+#scroll-nav a.snav-near .snav-dot {
+  width: 8px; height: 8px;
+  opacity: 0.55;
+}
+#scroll-nav a.snav-near .snav-label {
+  opacity: 0.6;
+  font-size: 0.78rem;
+}
+@media (max-width: 900px) { #scroll-nav { display: none; } }
 
 /* ── Footer ────────────────────────────────────────────────────── */
 footer {
