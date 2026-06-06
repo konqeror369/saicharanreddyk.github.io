@@ -718,7 +718,7 @@ section { padding-block: var(--section-py); }
 }
 #scroll-nav a.snav-active .snav-label {
   opacity: 1;
-  font-size: 1.4rem;
+  font-size: 1.2rem;
   font-weight: 700;
   text-shadow: 0 0 16px var(--accent), 0 0 32px color-mix(in srgb, var(--accent) 50%, transparent);
 }
